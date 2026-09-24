@@ -1,1 +1,123 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-heading: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Light Theme Palette */
+    --bg-main: #FFFFFF;
+    --bg-subtle: #F8FAFC;
+    --bg-tint: #F0FDF4;
+    --bg-card: #FFFFFF;
+    --border-card: #E2E8F0;
+    --text-head: #09111E;
+    --text-body: #475569;
+    --text-muted: #64748B;
+  }
+
+  .dark {
+    /* Dark Theme Palette */
+    --bg-main: #070B14;
+    --bg-subtle: #0B111E;
+    --bg-tint: #071510;
+    --bg-card: #0D1524;
+    --border-card: #1E293B;
+    --text-head: #FFFFFF;
+    --text-body: #94A3B8;
+    --text-muted: #64748B;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-main);
+    color: var(--text-head);
+    overflow-x: hidden;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.025em;
+  }
+}
+
+/* Background Patterns & Glows */
+.bg-grid-pattern {
+  background-size: 36px 36px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+
+.light .bg-grid-pattern,
+:not(.dark) .bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+}
+
+.hero-glow {
+  background: radial-gradient(circle at 60% 40%, rgba(5, 223, 114, 0.18) 0%, rgba(7, 11, 20, 0) 70%);
+}
+
+.banner-mesh {
+  background: linear-gradient(135deg, #051A13 0%, #082E20 50%, #03130D 100%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #070B14;
+}
+
+.light ::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1E293B;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Keyframe animations */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-7px); }
+}
+
+.animate-float-slow {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: floatSlow 6s ease-in-out 1.5s infinite;
+}
+
+/* Typewriter caret */
+@keyframes caretBlink {
+  0%, 45% { opacity: 1; }
+  55%, 100% { opacity: 0; }
+}
+
+.animate-caret-blink {
+  animation: caretBlink 1s steps(1, end) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-slow,
+  .animate-float-delayed,
+  .animate-caret-blink {
+    animation: none;
+  }
+}
