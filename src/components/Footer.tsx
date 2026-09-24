@@ -147,7 +147,7 @@ export const Footer: React.FC = () => {
               </form>
             )}
 
-            {/* Social Icons â€” plain white glyphs, as in the brand artwork */}
+            {/* Social Icons - plain white glyphs, as in the brand artwork */}
             <div className="flex items-center gap-4 pt-1">
               {[
                 { href: 'https://linkedin.com', label: 'LinkedIn', Icon: Linkedin },
