@@ -173,7 +173,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Legal Bar */}
         <div className="pt-7 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
-          <span>Â© {new Date().getFullYear()} TechInstant. All rights reserved.</span>
+          <span>&copy; {new Date().getFullYear()} TechInstant. All rights reserved.</span>
           <span>Innovating today for a smarter tomorrow.</span>
         </div>
       </div>
