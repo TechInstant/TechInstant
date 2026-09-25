@@ -25,11 +25,6 @@ const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
-/**
- * Types a multi-line headline out character by character, holds it, then
- * rewinds and types it again. Each line keeps its own styling, and empty lines
- * are padded with a non-breaking space so the block never changes height.
- */
 export const Typewriter: React.FC<TypewriterProps> = ({
   lines,
   typeMs = 55,

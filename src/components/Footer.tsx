@@ -150,11 +150,11 @@ export const Footer: React.FC = () => {
             {/* Social Icons - plain white glyphs, as in the brand artwork */}
             <div className="flex items-center gap-4 pt-1">
               {[
-                { href: 'https://linkedin.com', label: 'LinkedIn', Icon: Linkedin },
-                { href: 'https://x.com', label: 'X', Icon: XLogo },
+                { href: 'https://linkedin.com/company/techinstant/', label: 'LinkedIn', Icon: Linkedin },
+                { href: 'https://x.com/@TECHINSTANTC', label: 'X', Icon: XLogo },
                 { href: 'https://youtube.com', label: 'YouTube', Icon: Youtube },
                 { href: 'https://facebook.com', label: 'Facebook', Icon: Facebook },
-                { href: 'https://instagram.com', label: 'Instagram', Icon: Instagram },
+                { href: 'https://instagram.com/techinstantc', label: 'Instagram', Icon: Instagram },
               ].map(({ href, label, Icon }) => (
                 <a
                   key={label}
