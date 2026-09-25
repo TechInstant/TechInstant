@@ -1,8 +1,23 @@
 <!doctype html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="scroll-smooth">
 
 <head>
   <meta charset="UTF-8" />
+
+  <!-- Resolve the saved theme before first paint, so the page never flashes the
+       wrong one. Must stay in sync with ThemeContext (key: techinstant_theme). -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('techinstant_theme') || 'dark';
+        var dark = t === 'dark' ||
+          (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.classList.add(dark ? 'dark' : 'light');
+      } catch (e) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none'><rect width='32' height='32' rx='8' fill='%2305DF72'/><path d='M18 4L8 18H15L14 28L24 14H17L18 4Z' fill='%2309111E'/></svg>" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,7 +42,7 @@
 </head>
 
 <body
-  class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-slate-950 transition-colors duration-300 min-h-screen">
+  class="antialiased selection:bg-emerald-500 selection:text-slate-950 min-h-screen">
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
 </body>

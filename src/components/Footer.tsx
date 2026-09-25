@@ -19,7 +19,8 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-[#05090F] dark:bg-[#05090F] bg-slate-950 text-slate-300 border-t border-slate-800/80 pt-16 pb-12 overflow-hidden relative">
+    /* The footer is dark in both themes, as in the brand artwork. */
+    <footer className="bg-[#05090F] text-slate-300 border-t border-slate-800/80 pt-16 pb-12 overflow-hidden relative">
       {/* Ambient background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -151,7 +152,7 @@ export const Footer: React.FC = () => {
             <div className="flex items-center gap-4 pt-1">
               {[
                 { href: 'https://linkedin.com/company/techinstant/', label: 'LinkedIn', Icon: Linkedin },
-                { href: 'https://x.com/@TECHINSTANTC', label: 'X', Icon: XLogo },
+                { href: 'https://x.com/TECHINSTANTC', label: 'X', Icon: XLogo },
                 { href: 'https://youtube.com', label: 'YouTube', Icon: Youtube },
                 { href: 'https://facebook.com', label: 'Facebook', Icon: Facebook },
                 { href: 'https://instagram.com/techinstantc', label: 'Instagram', Icon: Instagram },

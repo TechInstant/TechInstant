@@ -113,8 +113,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <header 
       className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-slate-950/85 dark:bg-[#070B12]/90 bg-white/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 shadow-lg shadow-black/5' 
+        scrolled
+          ? 'bg-white/90 dark:bg-[#070B12]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 shadow-lg shadow-black/5'
           : 'bg-transparent border-b border-transparent'
       }`}
     >

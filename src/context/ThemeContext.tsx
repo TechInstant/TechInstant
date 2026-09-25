@@ -10,25 +10,32 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    const saved = localStorage.getItem('techinstant_theme') as Theme | null;
-    return saved || 'dark';
-  });
+const readStoredTheme = (): Theme => {
+  try {
+    return (localStorage.getItem('techinstant_theme') as Theme | null) || 'dark';
+  } catch {
+    return 'dark';
+  }
+};
 
-  const [isDark, setIsDark] = useState<boolean>(true);
+const resolveDark = (theme: Theme) =>
+  theme === 'dark' ||
+  (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [theme, setThemeState] = useState<Theme>(readStoredTheme);
+
+  /* Resolved on the first render (not defaulted to dark) so the theme toggle
+     never renders the wrong icon for a frame. The inline script in index.html
+     has already put the matching class on <html> before first paint. */
+  const [isDark, setIsDark] = useState<boolean>(() => resolveDark(readStoredTheme()));
 
   useEffect(() => {
     const root = document.documentElement;
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     const updateTheme = () => {
-      let resolvedDark = false;
-      if (theme === 'system') {
-        resolvedDark = mediaQuery.matches;
-      } else {
-        resolvedDark = theme === 'dark';
-      }
+      const resolvedDark = resolveDark(theme);
 
       setIsDark(resolvedDark);
       if (resolvedDark) {
