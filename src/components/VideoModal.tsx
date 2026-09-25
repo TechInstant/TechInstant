@@ -1,5 +1,6 @@
 import React from 'react';
 import { X, Play, CheckCircle2, Cpu, ShieldCheck, Sparkles } from './icons';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
 interface VideoModalProps {
   isOpen: boolean;
@@ -7,6 +8,8 @@ interface VideoModalProps {
 }
 
 export const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose }) => {
+  useBodyScrollLock(isOpen);
+
   if (!isOpen) return null;
 
   return (

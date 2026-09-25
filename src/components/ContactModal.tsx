@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, CheckCircle2, ArrowRight, ShieldCheck } from './icons';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -24,6 +25,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  useBodyScrollLock(isOpen);
 
   if (!isOpen) return null;
 

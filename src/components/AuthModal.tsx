@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Lock, Mail, ArrowRight, Sparkles } from './icons';
 import { BrandLogo } from './BrandLogo';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [success, setSuccess] = useState(false);
+  useBodyScrollLock(isOpen);
 
   if (!isOpen) return null;
 
@@ -31,7 +33,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-950/50">
-          <BrandLogo size="sm" showTagline={false} />
+          <BrandLogo size="sm" showTagline={false} onDark />
           <button 
             onClick={onClose}
             className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition"

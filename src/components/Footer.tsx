@@ -29,7 +29,7 @@ export const Footer: React.FC = () => {
 
           {/* Brand & Mission Column */}
           <div className="lg:col-span-3 space-y-5">
-            <BrandLogo size="md" />
+            <BrandLogo size="md" onDark />
             <p className="text-sm text-slate-400 max-w-xs leading-relaxed">
               Modern technology. Real solutions.<br />A better tomorrow.
             </p>

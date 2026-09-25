@@ -104,6 +104,18 @@
   animation: floatSlow 6s ease-in-out 1.5s infinite;
 }
 
+/* iOS Safari zooms the whole page when a focused control's font-size is under
+   16px, and never zooms back out. Force 16px on phones; the designed sizes
+   resume from the sm breakpoint up. The hero mockup's fake input is marked
+   data-decorative so it keeps scaling with the rest of the illustration. */
+@media (max-width: 639px) {
+  input:not([data-decorative]),
+  select:not([data-decorative]),
+  textarea:not([data-decorative]) {
+    font-size: 16px;
+  }
+}
+
 /* Typewriter caret */
 @keyframes caretBlink {
   0%, 45% { opacity: 1; }

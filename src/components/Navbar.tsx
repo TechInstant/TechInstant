@@ -7,6 +7,7 @@ import {
 } from './icons';
 import { BrandLogo } from './BrandLogo';
 import { useTheme } from '../context/ThemeContext';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
 interface NavbarProps {
   onOpenSearch: () => void;
@@ -40,6 +41,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   const navRef = useRef<HTMLElement>(null);
   const themeRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  /* Stop the page scrolling behind the open drawer. */
+  useBodyScrollLock(mobileMenuOpen);
 
   const cancelClose = () => {
     if (closeTimer.current) {
@@ -493,55 +497,37 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-20 bottom-0 bg-white/95 dark:bg-[#070B12]/95 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between overflow-y-auto z-40 animate-in slide-in-from-top duration-200">
-          <div className="space-y-4">
-            <Link
-              to="/"
-              className="block text-lg font-semibold text-slate-900 dark:text-white hover:text-emerald-500"
-            >
-              Home
-            </Link>
-            <Link
-              to="/products"
-              className="block text-lg font-semibold text-slate-900 dark:text-white hover:text-emerald-500"
-            >
-              Products Directory
-            </Link>
-            <Link
-              to="/solutions"
-              className="block text-lg font-semibold text-slate-900 dark:text-white hover:text-emerald-500"
-            >
-              Solutions & Services
-            </Link>
-            <Link
-              to="/ai-services"
-              className="block text-lg font-semibold text-slate-900 dark:text-white hover:text-emerald-500"
-            >
-              AI Services
-            </Link>
-            <Link
-              to="/about"
-              className="block text-lg font-semibold text-slate-900 dark:text-white hover:text-emerald-500"
-            >
-              About TechInstant
-            </Link>
-            <Link
-              to="/tools"
-              className="block text-lg font-semibold text-slate-900 dark:text-white hover:text-emerald-500"
-            >
-              Free Tools
-            </Link>
-            <Link
-              to="/contact"
-              className="block text-lg font-semibold text-slate-900 dark:text-white hover:text-emerald-500"
-            >
-              Contact Us
-            </Link>
+        <div className="lg:hidden fixed inset-x-0 top-20 bottom-0 bg-white dark:bg-[#070B12] border-t border-slate-200 dark:border-slate-800 px-6 py-5 flex flex-col gap-6 overflow-y-auto overscroll-contain z-40 animate-in slide-in-from-top duration-200">
+          {/* Full-width rows with a 48px tap target each */}
+          <div className="flex flex-col divide-y divide-slate-100 dark:divide-slate-800/80">
+            {[
+              { to: '/', label: 'Home' },
+              { to: '/products', label: 'Products Directory' },
+              { to: '/solutions', label: 'Solutions & Services' },
+              { to: '/ai-services', label: 'AI Services' },
+              { to: '/about', label: 'About TechInstant' },
+              { to: '/tools', label: 'Free Tools' },
+              { to: '/contact', label: 'Contact Us' },
+            ].map(({ to, label }) => (
+              <Link
+                key={to}
+                to={to}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center justify-between min-h-[48px] py-1 text-lg font-semibold transition-colors ${
+                  isActive(to)
+                    ? 'text-emerald-600 dark:text-emerald-400'
+                    : 'text-slate-900 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-400'
+                }`}
+              >
+                <span>{label}</span>
+                <ChevronDown className="w-4 h-4 -rotate-90 text-slate-300 dark:text-slate-600" />
+              </Link>
+            ))}
           </div>
 
-          <div className="space-y-4 pt-6 border-t border-slate-200 dark:border-slate-800">
+          <div className="space-y-4 mt-auto pt-6 border-t border-slate-200 dark:border-slate-800">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-slate-500">Theme</span>
+              <span className="text-sm font-medium text-slate-500 dark:text-slate-400">Theme</span>
               <div className="flex gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
                 <button 
                   onClick={() => setTheme('light')} 

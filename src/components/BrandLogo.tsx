@@ -5,6 +5,12 @@ interface BrandLogoProps {
   className?: string;
   showTagline?: boolean;
   size?: 'sm' | 'md' | 'lg';
+  /**
+   * Set on surfaces that stay dark in both themes (the footer, the modals).
+   * Without it the wordmark follows the page theme and "Instant" turns
+   * slate-900 in light mode, which is invisible against those surfaces.
+   */
+  onDark?: boolean;
 }
 
 /**
@@ -70,7 +76,8 @@ export const BrandMark: React.FC<{ className?: string }> = ({ className = '' }) 
 export const BrandLogo: React.FC<BrandLogoProps> = ({
   className = '',
   showTagline = true,
-  size = 'md'
+  size = 'md',
+  onDark = false
 }) => {
   /* The mark is taller than it is wide (32 x 38 in the source artwork). */
   const markSizes = {
@@ -106,11 +113,15 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
           className={`font-bold tracking-[-0.02em] ${textSizes[size]} leading-none font-sans`}
         >
           <span className="text-[#05DF72]">Tech</span>
-          <span className="text-slate-900 dark:text-white">Instant</span>
+          <span className={onDark ? 'text-white' : 'text-slate-900 dark:text-white'}>
+            Instant
+          </span>
         </span>
         {showTagline && (
           <span
-            className={`${taglineSizes[size]} font-medium text-slate-500 dark:text-slate-400 mt-[5px] leading-none flex items-center justify-between`}
+            className={`${taglineSizes[size]} font-medium ${
+              onDark ? 'text-slate-400' : 'text-slate-500 dark:text-slate-400'
+            } mt-[5px] leading-none flex items-center justify-between`}
           >
             <span>Build</span>
             <span className="text-[0.65em] opacity-70">&bull;</span>

@@ -274,6 +274,7 @@ export const HeroVisual: React.FC = () => {
               <div className="relative flex items-center">
                 <input
                   type="text"
+                  data-decorative
                   placeholder="Ask anything..."
                   value={aiPrompt}
                   onChange={(e) => setAiPrompt(e.target.value)}
