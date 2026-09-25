@@ -503,6 +503,15 @@ export const PlusCircle = createIcon(
   </>
 );
 
+/* The X (formerly Twitter) mark, as used in the brand artwork. */
+export const XLogo = createIcon(
+  <path
+    d="M18.9 2H22l-7.2 8.2L23.3 22h-6.6l-5.2-6.8L5.5 22H2.4l7.7-8.8L1.1 2h6.8l4.7 6.2L18.9 2Zm-1.1 18h1.7L7.3 3.7H5.5L17.8 20Z"
+    fill="currentColor"
+    stroke="none"
+  />
+);
+
 export const Bell = createIcon(
   <>
     <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />

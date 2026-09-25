@@ -1,6 +1,6 @@
 ﻿import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle2, Linkedin, Twitter, Youtube, Facebook, Instagram } from './icons';
+import { ArrowRight, CheckCircle2, Linkedin, XLogo, Youtube, Facebook, Instagram } from './icons';
 import { BrandLogo } from './BrandLogo';
 
 export const Footer: React.FC = () => {
@@ -151,7 +151,7 @@ export const Footer: React.FC = () => {
             <div className="flex items-center gap-4 pt-1">
               {[
                 { href: 'https://linkedin.com', label: 'LinkedIn', Icon: Linkedin },
-                { href: 'https://x.com', label: 'X', Icon: Twitter },
+                { href: 'https://x.com', label: 'X', Icon: XLogo },
                 { href: 'https://youtube.com', label: 'YouTube', Icon: Youtube },
                 { href: 'https://facebook.com', label: 'Facebook', Icon: Facebook },
                 { href: 'https://instagram.com', label: 'Instagram', Icon: Instagram },
