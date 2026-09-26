@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  ArrowRight, Play, Heart, Sparkles, Box, Wrench, Cpu, Smartphone, 
+  ArrowRight, ArrowUpRight, Play, Heart, Sparkles, Box, Cpu, Smartphone,
   Cloud, BarChart3, Lightbulb, Users, ShieldCheck, Clock, Layers
 } from '../icons';
 import { HeroVisual } from '../HeroVisual';
 import { Typewriter } from '../Typewriter';
+import { toolUrl } from '../../config';
 
 interface HomepageProps {
   onOpenVideo: () => void;
@@ -192,13 +193,16 @@ export const Homepage: React.FC<HomepageProps> = ({ onOpenVideo, onOpenContact }
                   A collection of free, useful digital tools for everyday tasks and productivity.
                 </p>
               </div>
-              <Link
-                to="/tools"
+              {/* Tools is a separate deployed app, so this leaves the SPA. */}
+              <a
+                href={toolUrl()}
+                target="_blank"
+                rel="noreferrer"
                 className="mt-6 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-emerald-500 dark:hover:text-emerald-400 flex items-center gap-1.5 transition group-hover:translate-x-0.5"
               >
-                <span>Explore tools</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+                <span>Launch tools</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
             </div>
 
           </div>

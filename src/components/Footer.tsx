@@ -1,7 +1,8 @@
 ﻿import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle2, Linkedin, XLogo, Youtube, Facebook, Instagram } from './icons';
+import { ArrowRight, ArrowUpRight, CheckCircle2, Linkedin, XLogo, Youtube, Facebook, Instagram } from './icons';
 import { BrandLogo } from './BrandLogo';
+import { toolUrl } from '../config';
 
 export const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -55,9 +56,15 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/tools" className="hover:text-emerald-400 transition-colors">
+                <a
+                  href={toolUrl()}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 hover:text-emerald-400 transition-colors"
+                >
                   TechInstant Tools
-                </Link>
+                  <ArrowUpRight className="w-3 h-3" />
+                </a>
               </li>
             </ul>
           </div>
@@ -94,9 +101,15 @@ export const Footer: React.FC = () => {
             <h4 className="text-sm font-bold text-white font-heading">Resources</h4>
             <ul className="space-y-2.5 text-[13px] text-slate-400">
               <li>
-                <Link to="/tools" className="hover:text-emerald-400 transition-colors">
-                  Documentation
-                </Link>
+                <a
+                  href={toolUrl()}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 hover:text-emerald-400 transition-colors"
+                >
+                  Free Tools Suite
+                  <ArrowUpRight className="w-3 h-3" />
+                </a>
               </li>
               <li>
                 <Link to="/contact" className="hover:text-emerald-400 transition-colors">

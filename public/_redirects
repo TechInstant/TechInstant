@@ -1,0 +1,4 @@
+# React Router serves every route from index.html, so Netlify has to fall back
+# to it for any path that isn't a real file. Without this, deep links like
+# /products or /about 404 on refresh or when opened directly.
+/*  /index.html  200

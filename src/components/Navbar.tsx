@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
-  Search, Sun, Moon, Monitor, ChevronDown, Menu, X, ArrowRight, 
-  Heart, Sparkles, Box, Wrench, Smartphone, Cloud, BarChart3, 
+  Search, Sun, Moon, Monitor, ChevronDown, Menu, X, ArrowRight, ArrowUpRight,
+  Heart, Sparkles, Box, Wrench, Smartphone, Cloud, BarChart3,
   Compass, Users, BookOpen, HelpCircle, FileCode2
 } from './icons';
 import { BrandLogo } from './BrandLogo';
 import { useTheme } from '../context/ThemeContext';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
+import { toolUrl } from '../config';
 
 interface NavbarProps {
   onOpenSearch: () => void;
@@ -214,18 +215,23 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </div>
                 </Link>
 
-                <Link
-                  to="/tools"
+                <a
+                  href={toolUrl()}
+                  target="_blank"
+                  rel="noreferrer"
                   className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition group"
                 >
                   <div className="p-2 rounded-lg bg-blue-500/10 text-blue-500 shrink-0">
                     <Wrench className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="font-semibold text-slate-900 dark:text-white group-hover:text-emerald-500 text-sm">TechInstant Tools</span>
+                    <span className="flex items-center gap-1 font-semibold text-slate-900 dark:text-white group-hover:text-emerald-500 text-sm">
+                      TechInstant Tools
+                      <ArrowUpRight className="w-3 h-3 text-slate-400" />
+                    </span>
                     <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Free online utilities for everyday productivity.</p>
                   </div>
-                </Link>
+                </a>
 
                 <div className="p-2 border-t border-slate-100 dark:border-slate-800/80 mt-1">
                   <Link
@@ -405,13 +411,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             {openMenu === 'resources' && (
               <div className={`${menuPanel} right-0`}>
               <div className={`${menuCard} w-64 p-2`}>
-                <Link
-                  to="/tools"
-                  className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                {/* Tools is its own deployed app, so this leaves the SPA. */}
+                <a
+                  href={toolUrl()}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-between gap-2.5 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition"
                 >
-                  <FileCode2 className="w-4 h-4 text-emerald-500" />
-                  <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Free Tools Suite</span>
-                </Link>
+                  <span className="flex items-center gap-2.5">
+                    <FileCode2 className="w-4 h-4 text-emerald-500" />
+                    <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Free Tools Suite</span>
+                  </span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
+                </a>
                 <a
                   href="#documentation"
                   onClick={(e) => { e.preventDefault(); onOpenSearch(); }}
@@ -506,23 +518,37 @@ export const Navbar: React.FC<NavbarProps> = ({
               { to: '/solutions', label: 'Solutions & Services' },
               { to: '/ai-services', label: 'AI Services' },
               { to: '/about', label: 'About TechInstant' },
-              { to: '/tools', label: 'Free Tools' },
+              { to: toolUrl(), label: 'Free Tools', external: true },
               { to: '/contact', label: 'Contact Us' },
-            ].map(({ to, label }) => (
-              <Link
-                key={to}
-                to={to}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center justify-between min-h-[48px] py-1 text-lg font-semibold transition-colors ${
-                  isActive(to)
-                    ? 'text-emerald-600 dark:text-emerald-400'
-                    : 'text-slate-900 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-400'
-                }`}
-              >
-                <span>{label}</span>
-                <ChevronDown className="w-4 h-4 -rotate-90 text-slate-300 dark:text-slate-600" />
-              </Link>
-            ))}
+            ].map(({ to, label, external }) =>
+              external ? (
+                <a
+                  key={to}
+                  href={to}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-between min-h-[48px] py-1 text-lg font-semibold text-slate-900 dark:text-white transition-colors hover:text-emerald-600 dark:hover:text-emerald-400"
+                >
+                  <span>{label}</span>
+                  <ArrowUpRight className="w-4 h-4 text-slate-300 dark:text-slate-600" />
+                </a>
+              ) : (
+                <Link
+                  key={to}
+                  to={to}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center justify-between min-h-[48px] py-1 text-lg font-semibold transition-colors ${
+                    isActive(to)
+                      ? 'text-emerald-600 dark:text-emerald-400'
+                      : 'text-slate-900 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-400'
+                  }`}
+                >
+                  <span>{label}</span>
+                  <ChevronDown className="w-4 h-4 -rotate-90 text-slate-300 dark:text-slate-600" />
+                </Link>
+              )
+            )}
           </div>
 
           <div className="space-y-4 mt-auto pt-6 border-t border-slate-200 dark:border-slate-800">
