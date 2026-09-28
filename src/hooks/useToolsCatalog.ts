@@ -79,19 +79,32 @@ const FALLBACK_TOOLS: CatalogTool[] = [
   t('timestamp', 'Timestamp Converter', 'developer', 'Convert between Unix timestamps and readable dates.'),
 
   t('meta-tag-generator', 'Meta Tag Generator', 'web', 'Build title, description, Open Graph and X tags with a live preview.', { popular: true, isNew: true }),
+  t('ip-location-checker', 'IP Location Checker', 'web', 'Look up the approximate location and network behind an IP address.', { popular: true, isNew: true }),
+
   t('qr-generator', 'QR Code Generator', 'qr', 'Create QR codes for links, text, email, phone and Wi-Fi.', { popular: true }),
 
   t('period-calculator', 'Period & Cycle Calculator', 'health', 'Estimate your next periods and fertile window.', { popular: true, isNew: true }),
   t('due-date-calculator', 'Pregnancy Due Date Calculator', 'health', 'Estimate a due date and see how far along you are.', { popular: true, isNew: true }),
   t('bmi-calculator', 'BMI Calculator', 'health', 'Check BMI and the healthy weight range for your height.', { isNew: true }),
-
-  t('gpa-calculator', 'GPA & CGPA Calculator', 'student', 'Work out semester GPA and cumulative CGPA.', { popular: true, isNew: true }),
-  t('word-counter', 'Word Counter', 'student', 'Count words, characters, sentences and reading time.', { popular: true }),
+  t('postpartum-guide', 'Postpartum Care Guide', 'health', 'Essential information and tips for recovery after childbirth.', { isNew: true }),
+  t('pregnancy-shopping-list', 'Pregnancy Shopping List', 'health', 'Essential items to prepare for your pregnancy and baby arrival.', { isNew: true }),
 
   t('percentage-calculator', 'Percentage Calculator', 'calculators', 'Work out percentages, shares and increases or decreases.', { popular: true }),
   t('age-calculator', 'Age Calculator', 'calculators', 'Calculate an exact age in years, months and days.'),
 
+  t('word-counter', 'Word Counter', 'student', 'Count words, characters, sentences and reading time.', { popular: true }),
+  t('gpa-calculator', 'GPA & CGPA Calculator', 'student', 'Work out semester GPA and cumulative CGPA on a 5.0 or 4.0 scale.', { popular: true, isNew: true }),
+  t('citation-generator', 'Citation Generator', 'student', 'Build APA, MLA, Harvard and Chicago references.', { popular: true, isNew: true }),
+  t('grade-calculator', 'Grade Calculator', 'student', 'See your current grade and what you need on what\'s left.', { popular: true, isNew: true }),
+  t('text-case-converter', 'Text Case Converter', 'student', 'Convert text to title, sentence, camel, snake and kebab case.', { isNew: true }),
+  t('readability-checker', 'Readability Checker', 'student', 'Score your writing and find the sentences slowing it down.', { isNew: true }),
+  t('hidden-text-scanner', 'Hidden Text & Prompt Injection Scanner', 'student', 'Find invisible characters and hidden instructions in text or PDFs.', { popular: true, isNew: true }),
+
   t('password-generator', 'Password Generator', 'business', 'Build strong random passwords with the options you choose.', { popular: true }),
+  t('invoice-generator', 'Invoice Generator', 'business', 'Create a professional invoice PDF and download it instantly.', { popular: true, isNew: true }),
+  t('receipt-generator', 'Receipt Generator', 'business', 'Produce a clean receipt PDF confirming a payment you have received.', { isNew: true }),
+  t('business-card-maker', 'Business Card Maker', 'business', 'Design a business card and export it print-ready as PNG or PDF.', { popular: true, isNew: true }),
+  t('certificate-generator', 'Certificate Generator', 'business', 'Create a certificate of completion or achievement as a PDF.', { isNew: true }),
 ];
 
 interface Catalog {
