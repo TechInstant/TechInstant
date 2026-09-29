@@ -442,7 +442,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Search Trigger */}
           <button
             onClick={onOpenSearch}
-            className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:text-emerald-500 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition"
+            aria-label="Search"
+            className="p-2.5 rounded-full text-slate-600 dark:text-slate-300 hover:text-emerald-500 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition"
             title="Search (Ctrl+K)"
           >
             <Search className="w-4 h-4" />
@@ -453,7 +454,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onClick={() => setTheme(isDark ? 'light' : 'dark')}
               onContextMenu={(e) => { e.preventDefault(); setThemeDropdownOpen(!themeDropdownOpen); }}
-              className="p-2 rounded-full text-slate-400 hover:text-emerald-400 hover:bg-slate-800/80 transition"
+              aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
+              className="p-2.5 rounded-full text-slate-400 hover:text-emerald-400 hover:bg-slate-800/80 transition"
               title={`Theme: ${theme.toUpperCase()} (Click to toggle)`}
             >
               {isDark ? (
@@ -482,17 +484,22 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Mobile Hamburger Toggle */}
-        <div className="flex items-center gap-2 lg:hidden">
+        {/* min-w-11/min-h-11 keeps both at a 44px tap target, which p-2 alone
+            did not reach. */}
+        <div className="flex items-center gap-1 lg:hidden">
           <button
             onClick={onOpenSearch}
-            className="p-2 rounded-lg text-slate-600 dark:text-slate-300"
+            aria-label="Search"
+            className="min-w-11 min-h-11 flex items-center justify-center rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
           >
             <Search className="w-5 h-5" />
           </button>
-          
+
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
+            className="min-w-11 min-h-11 flex items-center justify-center rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>

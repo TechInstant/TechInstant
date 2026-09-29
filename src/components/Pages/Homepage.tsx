@@ -25,8 +25,13 @@ export const Homepage: React.FC<HomepageProps> = ({ onOpenVideo, onOpenContact }
         <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
 
         <div className="max-w-7xl mx-auto w-full relative z-10">
+          {/* Stays stacked until lg on purpose. Splitting at md was tried and
+              reverted: it fits the hero on a tablet screen, but it also halves
+              the scene to ~344px, and since everything inside is sized in cqw
+              that drops the badge text to 6.5px. A hero that scrolls slightly is
+              better than one you cannot read. */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            
+
             {/* Left Column: Hero Text & CTAs (5 cols) */}
             <div className="lg:col-span-5 space-y-5 text-left">
               
@@ -103,7 +108,7 @@ export const Homepage: React.FC<HomepageProps> = ({ onOpenVideo, onOpenContact }
 
             <Link
               to="/products"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#05DF72] hover:bg-[#04BE60] text-slate-950 font-bold text-xs sm:text-sm self-start sm:self-auto transition shadow-sm"
+              className="inline-flex min-h-11 items-center gap-2 px-6 py-2.5 rounded-full bg-[#05DF72] hover:bg-[#04BE60] text-slate-950 font-bold text-xs sm:text-sm self-start sm:self-auto whitespace-nowrap transition shadow-sm"
             >
               <span>View All Products</span>
               <ArrowRight className="w-4 h-4" />
@@ -227,7 +232,7 @@ export const Homepage: React.FC<HomepageProps> = ({ onOpenVideo, onOpenContact }
               <div className="pt-2">
                 <button
                   onClick={() => onOpenContact()}
-                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#05DF72] hover:bg-[#04BE60] text-slate-950 font-bold text-xs sm:text-sm transition shadow-sm"
+                  className="inline-flex min-h-11 items-center gap-2 px-6 py-2.5 rounded-full bg-[#05DF72] hover:bg-[#04BE60] text-slate-950 font-bold text-xs sm:text-sm whitespace-nowrap transition shadow-sm"
                 >
                   <span>Get a Custom Solution</span>
                   <ArrowRight className="w-4 h-4" />

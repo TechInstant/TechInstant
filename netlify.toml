@@ -1,0 +1,32 @@
+# Netlify build settings, kept in the repo so the site cannot drift to a wrong
+# preset in the dashboard.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Single-page app: every path has to serve index.html so react-router can handle
+# it. Status 200 rather than 301 so the URL the visitor typed is preserved.
+#
+# `force = false` matters: it lets Netlify's own endpoints win first — in
+# particular the POST that Netlify Forms intercepts. A forced catch-all would
+# swallow form submissions and hand back the HTML page instead.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    # Vite fingerprints these filenames, so they can be cached indefinitely.
+    cache-control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    x-content-type-options = "nosniff"
+    referrer-policy = "strict-origin-when-cross-origin"

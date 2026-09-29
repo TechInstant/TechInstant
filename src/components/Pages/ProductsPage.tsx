@@ -119,25 +119,25 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenContact }) => 
         <div className="flex flex-wrap items-center justify-center gap-2 mt-8">
           <button
             onClick={() => setFilter('all')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition ${filter === 'all' ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-white'}`}
+            className={`min-h-11 px-4 py-2 rounded-xl text-xs font-bold transition ${filter === 'all' ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-white'}`}
           >
             All Products
           </button>
           <button
             onClick={() => setFilter('saas')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition ${filter === 'saas' ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-white'}`}
+            className={`min-h-11 px-4 py-2 rounded-xl text-xs font-bold transition ${filter === 'saas' ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-white'}`}
           >
             SaaS Platforms
           </button>
           <button
             onClick={() => setFilter('ai')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition ${filter === 'ai' ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-white'}`}
+            className={`min-h-11 px-4 py-2 rounded-xl text-xs font-bold transition ${filter === 'ai' ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-white'}`}
           >
             AI Solutions
           </button>
           <button
             onClick={() => setFilter('tools')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition ${filter === 'tools' ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-white'}`}
+            className={`min-h-11 px-4 py-2 rounded-xl text-xs font-bold transition ${filter === 'tools' ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-white'}`}
           >
             Digital Tools
           </button>
@@ -195,30 +195,32 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenContact }) => 
                   ))}
                 </div>
 
-                <div className="pt-4 flex items-center gap-4">
+                {/* Stacked on a phone. Side by side, these two shared a 320px
+                    row and squeezed each label into a three-line block. */}
+                <div className="pt-4 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4">
                   {p.isExternal ? (
                     <a
                       href={p.link}
                       target="_blank"
                       rel="noreferrer"
-                      className="px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center gap-2 transition shadow-lg shadow-emerald-500/20"
+                      className="min-h-11 px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 whitespace-nowrap transition shadow-lg shadow-emerald-500/20"
                     >
                       <span>{p.ctaText}</span>
-                      <ArrowUpRight className="w-4 h-4" />
+                      <ArrowUpRight className="w-4 h-4 shrink-0" />
                     </a>
                   ) : (
                     <a
                       href={p.link}
-                      className="px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center gap-2 transition shadow-lg shadow-emerald-500/20"
+                      className="min-h-11 px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 whitespace-nowrap transition shadow-lg shadow-emerald-500/20"
                     >
                       <span>{p.ctaText}</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-4 h-4 shrink-0" />
                     </a>
                   )}
 
                   <button
                     onClick={() => onOpenContact(p.name)}
-                    className="px-5 py-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+                    className="min-h-11 px-5 py-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-semibold whitespace-nowrap hover:bg-slate-200 dark:hover:bg-slate-700 transition"
                   >
                     Custom Implementation
                   </button>

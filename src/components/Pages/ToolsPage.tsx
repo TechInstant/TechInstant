@@ -97,7 +97,7 @@ export const ToolsPage: React.FC = () => {
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition ${
+              className={`min-h-11 px-3.5 py-2 rounded-xl text-xs font-bold transition ${
                 selectedCategory === cat.id
                   ? 'bg-emerald-500 text-slate-950 shadow'
                   : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'

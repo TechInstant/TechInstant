@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { 
-  Mail, CheckCircle2, ShieldCheck, 
-  ArrowRight, Clock, ChevronDown 
+import {
+  Mail, CheckCircle2, ShieldCheck,
+  ArrowRight, Clock, ChevronDown
 } from '../icons';
+import { submitForm, mailtoFallback, FALLBACK_EMAIL } from '../../lib/submitForm';
 
 export const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +18,7 @@ export const ContactPage: React.FC = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [failed, setFailed] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
 
   const projectTypes = [
@@ -55,13 +57,18 @@ export const ContactPage: React.FC = () => {
     }
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSubmitted(true);
-    }, 800);
+    setFailed(false);
+
+    const result = await submitForm('project-brief', formData);
+
+    setLoading(false);
+    /* Only claim it was sent when it actually was. A brief that silently went
+       nowhere is worse than an error message. */
+    if (result.ok) setSubmitted(true);
+    else setFailed(true);
   };
 
   return (
@@ -103,13 +110,37 @@ export const ContactPage: React.FC = () => {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6" noValidate={false}>
+              {failed && (
+                <div
+                  role="alert"
+                  className="rounded-xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-slate-700 dark:text-slate-200"
+                >
+                  <p className="font-bold text-slate-900 dark:text-white">
+                    We could not send that brief.
+                  </p>
+                  <p className="mt-1 leading-relaxed">
+                    Nothing has been lost from the form — try again, or send it
+                    straight to us and we will pick it up either way.
+                  </p>
+                  <a
+                    href={mailtoFallback('Project brief from the TechInstant site', formData)}
+                    className="mt-2 inline-block font-semibold text-emerald-600 dark:text-emerald-400 hover:underline break-all"
+                  >
+                    Email it to {FALLBACK_EMAIL}
+                  </a>
+                </div>
+              )}
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Your Full Name *</label>
+                  <label htmlFor="cp-name" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Your Full Name *</label>
                   <input
+                    id="cp-name"
+                    name="name"
                     type="text"
                     required
+                    autoComplete="name"
                     placeholder="e.g. Emmanuel Adeleke"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -118,10 +149,13 @@ export const ContactPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Work Email Address *</label>
+                  <label htmlFor="cp-email" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Work Email Address *</label>
                   <input
+                    id="cp-email"
+                    name="email"
                     type="email"
                     required
+                    autoComplete="email"
                     placeholder="e.g. emmanuel@company.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -131,9 +165,12 @@ export const ContactPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Company or Organization (Optional)</label>
+                <label htmlFor="cp-company" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Company or Organization (Optional)</label>
                 <input
+                  id="cp-company"
+                  name="company"
                   type="text"
+                  autoComplete="organization"
                   placeholder="e.g. Acme Corp or New Startup"
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
@@ -142,14 +179,18 @@ export const ContactPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">Project Discipline</label>
-                <div className="flex flex-wrap gap-2">
+                <span className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">Project Discipline</span>
+                {/* A group of toggles, not a single control, so it carries a
+                    group label rather than a <label for>. min-h-11 keeps every
+                    chip at a comfortable tap size on a phone. */}
+                <div role="group" aria-label="Project discipline" className="flex flex-wrap gap-2">
                   {projectTypes.map((type) => (
                     <button
                       type="button"
                       key={type}
+                      aria-pressed={formData.projectType === type}
                       onClick={() => setFormData({ ...formData, projectType: type })}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${
+                      className={`min-h-11 px-3.5 py-2 rounded-lg text-xs font-semibold transition border ${
                         formData.projectType === type
                           ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border-emerald-500'
                           : 'bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-400'
@@ -163,8 +204,10 @@ export const ContactPage: React.FC = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Expected Budget Range</label>
+                  <label htmlFor="cp-budget" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Expected Budget Range</label>
                   <select
+                    id="cp-budget"
+                    name="budget"
                     value={formData.budget}
                     onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:border-emerald-500 text-slate-900 dark:text-white text-sm outline-none transition"
@@ -176,8 +219,10 @@ export const ContactPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Target Launch Timeline</label>
+                  <label htmlFor="cp-timeline" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Target Launch Timeline</label>
                   <select
+                    id="cp-timeline"
+                    name="timeline"
                     value={formData.timeline}
                     onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:border-emerald-500 text-slate-900 dark:text-white text-sm outline-none transition"
@@ -191,8 +236,10 @@ export const ContactPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Project Overview / Goals *</label>
+                <label htmlFor="cp-description" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Project Overview / Goals *</label>
                 <textarea
+                  id="cp-description"
+                  name="description"
                   required
                   rows={4}
                   placeholder="Describe what you want to build, key capabilities needed, target users, or any technical constraints..."

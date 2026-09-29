@@ -37,16 +37,31 @@ export const HeroVisual: React.FC = () => {
     { id: 'settings', label: 'Settings', Icon: Settings },
   ];
 
-  /* Shared glass-pill styling for the four floating badges. */
+  /* Shared glass-pill styling for the four floating badges.
+   *
+   * Hidden below sm on purpose. Everything in this scene is sized in cqw so the
+   * whole picture scales as one, which is what keeps it looking like a photograph
+   * — but it means a 320px phone renders the scene at 0.41x and this text at
+   * 5.5px. Four illegible smudges over the laptop look like a rendering fault;
+   * the device shot alone reads correctly. From 640px up the text is 11px+, so
+   * the badges come back. */
   const badge =
-    'absolute z-40 flex items-center gap-[1.7cqw] rounded-full px-[2.2cqw] py-[1.5cqw] ' +
+    'absolute z-40 hidden sm:flex items-center gap-[1.7cqw] rounded-full px-[2.2cqw] py-[1.5cqw] ' +
     'bg-[#16283E]/80 backdrop-blur-md border border-white/10 ' +
     'shadow-[0_1.5cqw_3cqw_-0.8cqw_rgba(0,0,0,0.65)]';
   const badgeText = 'text-[1.85cqw] font-semibold text-white leading-[1.35] tracking-tight';
   const badgeIcon = 'w-[4.2cqw] h-[4.2cqw] flex-shrink-0 text-[#22C883]';
 
   return (
-    <div className="@container relative w-full max-w-[700px] mx-auto aspect-[620/358] select-none">
+    /* The whole scene is an illustration of a product, not a product. Hiding it
+       from assistive technology keeps the hero's actual message — the headline
+       and its two buttons — from being buried under a fake dashboard. Every
+       control inside is given tabIndex={-1} to match, since aria-hidden on a
+       container with focusable children is worse than not hiding it at all. */
+    <div
+      aria-hidden="true"
+      className="@container relative w-full max-w-[700px] mx-auto aspect-[620/358] select-none"
+    >
 
       {/* ================= SCENE BACKGROUND =================
           Stands in for the blurred desk photo in the original: a dark wall with
@@ -130,6 +145,7 @@ export const HeroVisual: React.FC = () => {
                   {navItems.map(({ id, label, Icon }) => (
                     <button
                       key={id}
+                      tabIndex={-1}
                       onClick={() => setActiveSidebar(id)}
                       className={`w-full flex items-center gap-[0.7cqw] px-[0.8cqw] py-[0.65cqw] rounded-[0.5cqw] text-left text-[1cqw] transition ${
                         activeSidebar === id
@@ -275,12 +291,14 @@ export const HeroVisual: React.FC = () => {
                 <input
                   type="text"
                   data-decorative
+                  tabIndex={-1}
                   placeholder="Ask anything..."
                   value={aiPrompt}
                   onChange={(e) => setAiPrompt(e.target.value)}
                   className="w-full bg-slate-50 border border-slate-200 rounded-[0.7cqw] py-[0.75cqw] pl-[0.9cqw] pr-[3cqw] text-[0.95cqw] text-slate-800 placeholder-slate-400 outline-none focus:border-emerald-400"
                 />
                 <button
+                  tabIndex={-1}
                   onClick={() => setAiPrompt('Building your workflow...')}
                   aria-label="Send prompt"
                   className="absolute right-[0.4cqw] w-[2.1cqw] h-[2.1cqw] rounded-[0.55cqw] bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center transition"
@@ -295,6 +313,7 @@ export const HeroVisual: React.FC = () => {
               {prompts.map((p) => (
                 <button
                   key={p.title}
+                  tabIndex={-1}
                   onClick={() => setAiPrompt(p.title)}
                   className="w-full flex items-center gap-[0.75cqw] px-[0.8cqw] py-[0.75cqw] rounded-[0.6cqw] bg-white border border-slate-200/80 hover:border-emerald-300 hover:bg-emerald-50/60 transition group"
                 >

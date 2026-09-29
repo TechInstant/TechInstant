@@ -171,12 +171,20 @@ export const SolutionsPage: React.FC<SolutionsPageProps> = ({ onOpenContact }) =
                 </div>
 
                 <div className="pt-4">
+                  {/* The service name makes this label long enough to wrap to
+                      three lines on a phone, so the short form shows there and
+                      the full one from sm up. aria-label keeps the specific
+                      wording for screen readers at every width, since "Request
+                      Proposal" on its own is ambiguous when six of these are on
+                      the page. */}
                   <button
                     onClick={() => onOpenContact(s.title)}
-                    className="px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center gap-2 transition shadow-lg shadow-emerald-500/20"
+                    aria-label={`Request proposal for ${s.title}`}
+                    className="w-full sm:w-auto min-h-11 px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition shadow-lg shadow-emerald-500/20"
                   >
-                    <span>Request Proposal for {s.title}</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <span className="sm:hidden">Request Proposal</span>
+                    <span className="hidden sm:inline">Request Proposal for {s.title}</span>
+                    <ArrowRight className="w-4 h-4 shrink-0" />
                   </button>
                 </div>
               </div>

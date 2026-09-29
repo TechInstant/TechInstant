@@ -1,21 +1,34 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Linkedin, XLogo, Youtube, Facebook, Instagram } from './icons';
+import { submitForm, FALLBACK_EMAIL } from '../lib/submitForm';
 import { BrandLogo } from './BrandLogo';
 
 export const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [subscribeFailed, setSubscribeFailed] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setTimeout(() => {
-        setSubscribed(false);
-        setEmail('');
-      }, 4000);
+    if (!email.trim() || sending) return;
+
+    setSending(true);
+    setSubscribeFailed(false);
+
+    const result = await submitForm('newsletter', { email });
+
+    setSending(false);
+    if (!result.ok) {
+      setSubscribeFailed(true);
+      return;
     }
+
+    setSubscribed(true);
+    setEmail('');
+    /* Return the field after a moment so someone can add a second address. */
+    setTimeout(() => setSubscribed(false), 5000);
   };
 
   return (
@@ -126,26 +139,49 @@ export const Footer: React.FC = () => {
             {subscribed ? (
               <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 shrink-0" />
-                <span>Subscribed! Check your inbox soon.</span>
+                {/* No confirmation email is sent, so do not promise one. */}
+                <span>Thanks — you are on the list.</span>
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="relative flex items-center">
+                <label htmlFor="footer-email" className="sr-only">
+                  Email address
+                </label>
                 <input
+                  id="footer-email"
+                  name="email"
                   type="email"
                   required
+                  autoComplete="email"
                   placeholder="Enter your email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-slate-100 border border-slate-300 rounded-lg py-2.5 pl-3.5 pr-12 text-[13px] text-slate-900 placeholder-slate-500 outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition"
+                  disabled={sending}
+                  /* py-3.5 leaves room for a 40px tap target inside the field. */
+                  className="w-full bg-slate-100 border border-slate-300 rounded-lg py-3.5 pl-3.5 pr-14 text-[13px] text-slate-900 placeholder-slate-500 outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition disabled:opacity-60"
                 />
                 <button
                   type="submit"
                   aria-label="Subscribe"
-                  className="absolute right-1.5 w-8 h-8 rounded-md bg-emerald-500 hover:bg-emerald-400 text-white flex items-center justify-center transition"
+                  disabled={sending}
+                  className="absolute right-1.5 w-10 h-10 rounded-md bg-emerald-500 hover:bg-emerald-400 text-white flex items-center justify-center transition disabled:opacity-60"
                 >
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </form>
+            )}
+
+            {subscribeFailed && (
+              <p role="alert" className="text-xs text-amber-400 leading-relaxed">
+                That did not go through. Email{' '}
+                <a
+                  href={`mailto:${FALLBACK_EMAIL}?subject=Newsletter`}
+                  className="font-semibold underline break-all"
+                >
+                  {FALLBACK_EMAIL}
+                </a>{' '}
+                and we will add you.
+              </p>
             )}
 
             {/* Social Icons - plain white glyphs, as in the brand artwork */}

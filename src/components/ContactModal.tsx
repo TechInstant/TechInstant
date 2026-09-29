@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, CheckCircle2, ArrowRight, ShieldCheck } from './icons';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
+import { submitForm, mailtoFallback, FALLBACK_EMAIL } from '../lib/submitForm';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -25,17 +26,23 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [failed, setFailed] = useState(false);
   useBodyScrollLock(isOpen);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  /* Files into the same `project-brief` form as the contact page — the fields
+     are identical, so briefs from both places land in one list. */
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSubmitted(true);
-    }, 800);
+    setFailed(false);
+
+    const result = await submitForm('project-brief', formData);
+
+    setLoading(false);
+    if (result.ok) setSubmitted(true);
+    else setFailed(true);
   };
 
   const projectTypes = [
@@ -95,12 +102,34 @@ export const ContactModal: React.FC<ContactModalProps> = ({
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="p-6 space-y-5">
+            {failed && (
+              <div
+                role="alert"
+                className="rounded-xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-slate-200"
+              >
+                <p className="font-bold text-white">We could not send that brief.</p>
+                <p className="mt-1 leading-relaxed">
+                  Nothing has been lost from the form — try again, or send it
+                  straight to us.
+                </p>
+                <a
+                  href={mailtoFallback('Project brief from the TechInstant site', formData)}
+                  className="mt-2 inline-block font-semibold text-emerald-400 hover:underline break-all"
+                >
+                  Email it to {FALLBACK_EMAIL}
+                </a>
+              </div>
+            )}
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">Your Full Name *</label>
+                <label htmlFor="cm-name" className="block text-xs font-medium text-slate-300 mb-1.5">Your Full Name *</label>
                 <input
+                  id="cm-name"
+                  name="name"
                   type="text"
                   required
+                  autoComplete="name"
                   placeholder="e.g. Emmanuel Adeleke"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}

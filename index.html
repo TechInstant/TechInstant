@@ -44,6 +44,38 @@
 <body
   class="antialiased selection:bg-emerald-500 selection:text-slate-950 min-h-screen">
   <div id="root"></div>
+
+  <!--
+    Netlify Forms declarations.
+
+    Netlify detects forms by parsing the HTML it receives at build time, and this
+    is a single-page app — the real forms are rendered by React and never appear
+    here. So each one is declared once below, hidden, with every field it sends.
+    React then POSTs url-encoded data with a matching `form-name` (see
+    src/lib/submitForm.ts) and Netlify files the submission.
+
+    Keep the field names in step with the React forms. A field that is missing
+    here is silently dropped from the submission.
+
+    Submissions appear in Netlify → Forms. Turn on email notification there to
+    have them forwarded; it cannot be set from the code.
+  -->
+  <form name="project-brief" netlify netlify-honeypot="bot-field" hidden>
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <input type="text" name="company" />
+    <input type="text" name="projectType" />
+    <input type="text" name="budget" />
+    <input type="text" name="timeline" />
+    <textarea name="description"></textarea>
+    <input type="text" name="bot-field" />
+  </form>
+
+  <form name="newsletter" netlify netlify-honeypot="bot-field" hidden>
+    <input type="email" name="email" />
+    <input type="text" name="bot-field" />
+  </form>
+
   <script type="module" src="/src/main.tsx"></script>
 </body>
 
