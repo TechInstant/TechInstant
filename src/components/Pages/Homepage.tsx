@@ -368,7 +368,7 @@ export const Homepage: React.FC<HomepageProps> = ({ onOpenVideo, onOpenContact }
               <ArrowRight className="w-4 h-4" />
             </button>
             <span className="text-xs text-slate-400">
-              Or contact us at <a href="mailto:hello@techinstant.com" className="text-emerald-400 hover:underline">hello@techinstant.com</a>
+              Or contact us at <a href="mailto:team.techinstant@gmail.com" className="text-emerald-400 hover:underline">team.techinstant@gmail.com</a>
             </span>
           </div>
         </div>

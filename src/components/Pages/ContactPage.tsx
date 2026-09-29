@@ -229,8 +229,8 @@ export const ContactPage: React.FC = () => {
                 </div>
                 <div>
                   <span className="text-slate-500 dark:text-slate-400 block text-xs">General & New Projects</span>
-                  <a href="mailto:hello@techinstant.com" className="font-semibold text-slate-900 dark:text-white hover:text-emerald-500">
-                    hello@techinstant.com
+                  <a href="mailto:team.techinstant@gmail.com" className="font-semibold text-slate-900 dark:text-white hover:text-emerald-500 break-all">
+                    team.techinstant@gmail.com
                   </a>
                 </div>
               </div>
