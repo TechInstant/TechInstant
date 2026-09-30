@@ -6,7 +6,10 @@ import { Footer } from './components/Footer';
 import { SearchModal } from './components/SearchModal';
 import { ContactModal } from './components/ContactModal';
 import { VideoModal } from './components/VideoModal';
-import { AuthModal } from './components/AuthModal';
+/* AuthModal is intentionally not rendered. The Sign In entry points were removed
+   because nothing on the site needs an account yet, and the modal never
+   authenticated anyone — it ran a timer and claimed success. The component is
+   kept so it can be wired to real auth when there is something to sign in to. */
 
 import { Homepage } from './components/Pages/Homepage';
 import { ProductsPage } from './components/Pages/ProductsPage';
@@ -38,7 +41,6 @@ const AppContent: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [contactProjectType, setContactProjectType] = useState<string>('SaaS Product');
 
   const handleOpenContact = (projectType?: string) => {
@@ -54,7 +56,6 @@ const AppContent: React.FC = () => {
       <Navbar
         onOpenSearch={() => setIsSearchOpen(true)}
         onOpenContact={handleOpenContact}
-        onOpenAuth={() => setIsAuthOpen(true)}
       />
 
       {/* Main Page Routing */}
@@ -95,14 +96,9 @@ const AppContent: React.FC = () => {
         defaultProjectType={contactProjectType}
       />
 
-      <VideoModal 
-        isOpen={isVideoOpen} 
-        onClose={() => setIsVideoOpen(false)} 
-      />
-
-      <AuthModal 
-        isOpen={isAuthOpen} 
-        onClose={() => setIsAuthOpen(false)} 
+      <VideoModal
+        isOpen={isVideoOpen}
+        onClose={() => setIsVideoOpen(false)}
       />
     </div>
   );

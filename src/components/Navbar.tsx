@@ -12,7 +12,6 @@ import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 interface NavbarProps {
   onOpenSearch: () => void;
   onOpenContact: (projectType?: string) => void;
-  onOpenAuth: () => void;
 }
 
 type MenuId = 'products' | 'solutions' | 'resources';
@@ -26,8 +25,7 @@ const menuCard =
 
 export const Navbar: React.FC<NavbarProps> = ({
   onOpenSearch,
-  onOpenContact,
-  onOpenAuth
+  onOpenContact
 }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -469,14 +467,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
-          {/* Sign In Button */}
-          <button
-            onClick={onOpenAuth}
-            className="px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-emerald-500 dark:hover:text-white transition"
-          >
-            Sign In
-          </button>
-
           {/* Get Started Button */}
           <button
             onClick={() => onOpenContact()}
@@ -563,13 +553,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </button>
               </div>
             </div>
-
-            <button
-              onClick={() => { setMobileMenuOpen(false); onOpenAuth(); }}
-              className="w-full py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-white font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition active:scale-[0.99]"
-            >
-              Sign In
-            </button>
 
             <button
               onClick={() => { setMobileMenuOpen(false); onOpenContact(); }}
