@@ -37,6 +37,7 @@ const FALLBACK_CATEGORIES: CatalogCategory[] = [
   { id: 'health', name: 'Health Tools', slug: 'health', description: 'Private cycle, pregnancy and wellbeing calculators.' },
   { id: 'calculators', name: 'Calculators', slug: 'calculators', description: 'Useful everyday calculators.' },
   { id: 'student', name: 'Student Tools', slug: 'student', description: 'Tools for study and academic work.' },
+  { id: 'team', name: 'Team Tools', slug: 'team', description: 'For standups, retros and running a meeting.' },
   { id: 'business', name: 'Business Tools', slug: 'business', description: 'Useful tools for businesses and professionals.' },
 ];
 
@@ -113,7 +114,8 @@ const FALLBACK_TOOLS: CatalogTool[] = [
   t('readability-checker', 'Readability Checker', 'student', 'Score your writing and find the sentences slowing it down.', { isNew: true }),
   t('hidden-text-scanner', 'Hidden Text & Prompt Injection Scanner', 'student', 'Find invisible characters and hidden instructions in text or PDFs.', { popular: true, isNew: true }),
   t('study-timer', 'Study Timer', 'student', 'A Pomodoro timer with adjustable focus and break lengths.', { popular: true, isNew: true }),
-  t('random-picker', 'Random Picker', 'student', 'Pick a winner, shuffle an order, make teams or roll a number.', { isNew: true }),
+
+  t('random-picker', 'Spin the Wheel & Team Picker', 'team', 'Spin a wheel to pick who goes next, shuffle a standup order or split into teams.', { popular: true, isNew: true }),
 
   t('password-generator', 'Password Generator', 'business', 'Build strong random passwords with the options you choose.', { popular: true }),
   t('invoice-generator', 'Invoice Generator', 'business', 'Create a professional invoice PDF and download it instantly.', { popular: true, isNew: true }),
