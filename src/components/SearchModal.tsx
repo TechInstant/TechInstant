@@ -148,7 +148,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
           <button
             onClick={onClose}
             aria-label="Close search"
-            className="p-1 flex-shrink-0 text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+            className="min-w-9 min-h-9 flex items-center justify-center flex-shrink-0 text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition active:scale-95"
           >
             <X className="w-5 h-5" />
           </button>

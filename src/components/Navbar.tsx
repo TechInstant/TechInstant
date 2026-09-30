@@ -101,6 +101,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       if (event.key === 'Escape') {
         closeNow();
         setThemeDropdownOpen(false);
+        setMobileMenuOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -116,10 +117,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header 
-      className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
-        scrolled
-          ? 'bg-white/90 dark:bg-[#070B12]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 shadow-lg shadow-black/5'
-          : 'bg-transparent border-b border-transparent'
+      className={`fixed top-0 inset-x-0 transition-all duration-300 ${
+        mobileMenuOpen
+          ? 'z-50 bg-white dark:bg-[#070B12] border-b border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5'
+          : scrolled
+            ? 'z-40 bg-white/90 dark:bg-[#070B12]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 shadow-lg shadow-black/5'
+            : 'z-40 bg-transparent border-b border-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -508,7 +511,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-20 bottom-0 bg-white dark:bg-[#070B12] border-t border-slate-200 dark:border-slate-800 px-6 py-5 flex flex-col gap-6 overflow-y-auto overscroll-contain z-40 animate-in slide-in-from-top duration-200">
+        <div className="lg:hidden fixed inset-x-0 top-20 bottom-0 bg-white dark:bg-[#070B12] border-t border-slate-200 dark:border-slate-800 px-6 py-5 flex flex-col gap-6 overflow-y-auto overscroll-contain z-50 animate-in slide-in-from-top duration-200 pb-12 shadow-2xl">
           {/* Full-width rows with a 48px tap target each */}
           <div className="flex flex-col divide-y divide-slate-100 dark:divide-slate-800/80">
             {[
@@ -563,14 +566,14 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <button
               onClick={() => { setMobileMenuOpen(false); onOpenAuth(); }}
-              className="w-full py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-white font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-800"
+              className="w-full py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-white font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition active:scale-[0.99]"
             >
               Sign In
             </button>
 
             <button
               onClick={() => { setMobileMenuOpen(false); onOpenContact(); }}
-              className="w-full py-3 rounded-xl bg-emerald-500 text-slate-950 font-bold text-sm shadow-lg shadow-emerald-500/20"
+              className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm shadow-lg shadow-emerald-500/20 active:scale-[0.99] transition"
             >
               Get Started — Start a Project
             </button>
